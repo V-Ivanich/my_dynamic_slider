@@ -40,6 +40,7 @@ for (let i = 0; i != 5; i++) {
 // в зависимости от флага
 function effectSlide(flag) {
   massivItems = document.querySelectorAll('.slide-single');
+  temporary = Array.from(massivItems);
 
   if (flag == 0) {
     massivItems[0].remove();
