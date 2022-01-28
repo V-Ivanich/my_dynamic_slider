@@ -18,7 +18,7 @@ let indexL = 0,
   raschet,
   massivItems;
 
-  //фун-я создания и инициализации элемента
+//фун-я создания и инициализации элемента
 function bornItem(step, offset) {
   let img = document.createElement('img');
   img.src = slider[step];
@@ -36,12 +36,24 @@ for (let i = 0; i != 5; i++) {
   }
 }
 
+function masivADD() {
+  massivItems = document.querySelectorAll('.slide-single');
+  for (let i = 0; i < massivItems.length; i++) {
+    temporary[i] = massivItems[i];
+    console.log(temporary);
+  }
+}
+
 //прокрутка слайдера в обе стороны
 // в зависимости от флага
 function effectSlide(flag) {
+<<<<<<< HEAD
   massivItems = document.querySelectorAll('.slide-single');
   temporary = Array.from(massivItems);
 
+=======
+  masivADD();
+>>>>>>> 61946ae7b54d7a51ff4b8b4f4bca1efe05c1bb32
   if (flag == 0) {
     massivItems[0].remove();
     for (let i = 1; i < massivItems.length; i++) {
