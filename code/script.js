@@ -1,8 +1,10 @@
 
 const btnLeft = document.querySelector('#lev'),
-  btnRight = document.querySelector('#prav');
-  dots = document.querySelectorAll('.dot');
-  maza = document.querySelector('.dots');
+  btnRight = document.querySelector('#prav'),
+  dots = document.querySelectorAll('.dot'),
+  span1 = document.querySelector('#sp1'),
+  span2 = document.querySelector('#sp2'),
+  span3 = document.querySelector('#sp3');
 
 let pointY = [-105, 0, 105, 210, 315],
   conteiner = document.querySelector('#slide'),
@@ -102,16 +104,26 @@ btnRight.addEventListener('click', () => {
   }
   effectSlide(0);
 })
-console.log(dots);
 
-maza.addEventListener('click', function () {
-  for(let i =0; i < dots.length - 1; i++){
+//clear spans all
+function spanClear() {
+  for (let i = 0; i < dots.length; i++) {
     dots[i].classList.remove('on');
   }
-  for(let i =0; i < dots.length - 1; i++){
-    dots[i].onclick = function() {
-      dots[i].classList.add('on');
-    }
-    
-  }
+}
+
+//buttons spans
+span1.addEventListener('click', () => {
+  spanClear();
+  span1.classList.add('on');
+})
+
+span2.addEventListener('click', () => {
+  spanClear();
+  span2.classList.add('on');
+})
+
+span3.addEventListener('click', () => {
+  spanClear();
+  span3.classList.add('on');
 })
