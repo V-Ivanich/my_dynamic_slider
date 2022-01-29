@@ -1,6 +1,8 @@
 
 const btnLeft = document.querySelector('#lev'),
   btnRight = document.querySelector('#prav');
+  dots = document.querySelectorAll('.dot');
+  maza = document.querySelector('.dots');
 
 let pointY = [-105, 0, 105, 210, 315],
   conteiner = document.querySelector('#slide'),
@@ -99,4 +101,17 @@ btnRight.addEventListener('click', () => {
     indexL = raschet;
   }
   effectSlide(0);
+})
+console.log(dots);
+
+maza.addEventListener('click', function () {
+  for(let i =0; i < dots.length - 1; i++){
+    dots[i].classList.remove('on');
+  }
+  for(let i =0; i < dots.length - 1; i++){
+    dots[i].onclick = function() {
+      dots[i].classList.add('on');
+    }
+    
+  }
 })
