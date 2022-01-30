@@ -25,7 +25,8 @@ h1 {
 
 .dots {
   width: 300px;
-  margin: 8px auto;
+  height: 35px;
+  margin: 10px auto;
   display: flex;
   justify-content: space-between;
   
@@ -43,10 +44,10 @@ h1 {
 }
 button {
   width: 35px;
-  height: 35px;
+  padding-bottom: 5px;
   border: transparent;
   border-radius: 50%;
-  font-size: 24px;
+  font-size: 22px;
   background: transparent;
   color: rgb(194, 207, 203);
 }

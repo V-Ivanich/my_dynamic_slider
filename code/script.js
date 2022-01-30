@@ -6,7 +6,7 @@ const btnLeft = document.querySelector('#lev'),
   span2 = document.querySelector('#sp2'),
   span3 = document.querySelector('#sp3');
 
-let pointY = [-105, 0, 105, 210, 315],
+let pointY = [-105, 0, 105, 210, 315],//координаты вывода картинок
   conteiner = document.querySelector('#slide'),
   slides = document.querySelectorAll('.slide-single'),
   firChild,
@@ -18,14 +18,15 @@ for (let i = 0; i < slides.length; i++) {
   slides[i].remove();
 }
 
-let indexL = 0,
-  indexR = 4,
-  flag = 0,
-  raschet,
-  check,
-  massivItems;
+let indexL = 0,//левая позиция скрытого элемента из массива картинок
+  indexR = 4,//правая позиция скрытого элемента
+  flag = 0,//для прокрутки слайдера в определенную сторону
+  raschet,//вспомогательная
+  check,//еще один флаг
+  massivItems;//коллекция видимых картинок + 2 невидимых
 
 //фун-я создания и инициализации элемента
+//в зависимости от флага после или перед nodelist
 function bornItem(step, offset, check) {
   let img = document.createElement('img');
 
@@ -47,8 +48,8 @@ for (let i = 0; i != 5; i++) {
   if (i == 4) {
     break;
   }
-
 }
+leftButton();
 
 //прокрутка слайдера в обе стороны
 // в зависимости от флага
@@ -76,7 +77,7 @@ function effectSlide(flag) {
 
 //левая кнопка
 //и расчет первой и последней позиции
-btnLeft.addEventListener('click', () => {
+function leftButton() {
   indexL--;
   if (indexL < 0) {
     indexL = 8;
@@ -86,9 +87,10 @@ btnLeft.addEventListener('click', () => {
     raschet = indexR - 9;
     indexR = raschet;
   }
-
   effectSlide(1);
-})
+  spanActive();
+}
+btnLeft.addEventListener('click', leftButton);
 
 //правая кнопка
 //и расчет первой и последней позиции
@@ -103,6 +105,7 @@ btnRight.addEventListener('click', () => {
     indexL = raschet;
   }
   effectSlide(0);
+  spanActive();
 })
 
 //clear spans all
@@ -127,3 +130,19 @@ span3.addEventListener('click', () => {
   spanClear();
   span3.classList.add('on');
 })
+
+function spanActive() {
+  switch (indexL) {
+    case 8:
+      spanClear();
+      span1.classList.add('on');
+      break;
+    case 5:
+      spanClear();
+      span3.classList.add('on');
+      break;
+    case 2:
+      spanClear();
+      span2.classList.add('on');
+  }
+}
