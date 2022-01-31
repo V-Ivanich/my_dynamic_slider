@@ -123,12 +123,13 @@ span1.addEventListener('click', () => {
   let cikl = positionSpan(1)
   for (let i = 0; i < cikl; i++) {
     if (flag == 1) {
-      setTimeout(leftButton, 100);
+      leftButton();
     }
     else {
-      setTimeout(rightButton, 100);
+      rightButton();
     }
   }
+
 })
 
 span2.addEventListener('click', () => {
@@ -136,10 +137,10 @@ span2.addEventListener('click', () => {
   let cikl = positionSpan(2)
   for (let i = 0; i < cikl; i++) {
     if (flag == 1) {
-      setTimeout(leftButton, 100);
+      leftButton();
     }
     else {
-      setTimeout(rightButton, 100);
+      rightButton();
     }
   }
 })
@@ -149,28 +150,40 @@ span3.addEventListener('click', () => {
   let cikl = positionSpan(3)
   for (let i = 0; i < cikl; i++) {
     if (flag == 1) {
-      setTimeout(leftButton, 100);
+      leftButton();
     }
     else {
-      setTimeout(rightButton, 100);
+      rightButton();
     }
   }
 })
 
 function spanActive() {
-  switch (indexL) {
-    case 0:
-      spanClear();
-      span1.classList.add('on');
-      break;
-    case 3:
-      spanClear();
-      span2.classList.add('on');
-    case 6:
-      spanClear();
-      span3.classList.add('on');
-      break;
+  if (indexL == 0) {
+    spanClear();
+    span1.classList.add('on');
   }
+  if (indexL == 3) {
+    spanClear();
+    span2.classList.add('on');
+  }
+  if (indexL == 6) {
+    spanClear();
+    span3.classList.add('on');
+  }
+  // switch (indexL) {
+  //   case 0:
+  //     spanClear();
+  //     span1.classList.add('on');
+  //     break;
+  //   case 3:
+  //     spanClear();
+  //     span2.classList.add('on');
+  //   case 6:
+  //     spanClear();
+  //     span3.classList.add('on');
+  //     break;
+  // }
 }
 
 function positionSpan(n) {
@@ -206,6 +219,7 @@ function positionSpan(n) {
       minus++;
     }
     if (inL == 8) inL = -1;
+    if (inL == 7) inL = -2;
     while (inL != 3) {
       inL++;
       plus++;
