@@ -49,7 +49,6 @@ for (let i = 0; i != 5; i++) {
     break;
   }
 }
-leftButton();
 
 //прокрутка слайдера в обе стороны
 // в зависимости от флага
@@ -94,7 +93,7 @@ btnLeft.addEventListener('click', leftButton);
 
 //правая кнопка
 //и расчет первой и последней позиции
-btnRight.addEventListener('click', () => {
+function rightButton (){
   indexR++;
   if (indexR > 8) {
     indexR = 0;
@@ -106,7 +105,8 @@ btnRight.addEventListener('click', () => {
   }
   effectSlide(0);
   spanActive();
-})
+}
+btnRight.addEventListener('click', rightButton);
 
 //clear spans all
 function spanClear() {
@@ -118,7 +118,15 @@ function spanClear() {
 //buttons spans
 span1.addEventListener('click', () => {
   spanClear();
-  span1.classList.add('on');
+  let cikl = positionSpan(1)
+      for(let i = 0; i < cikl ; i++){
+        if(flag ==1){
+          leftButton();
+        }
+        else {
+          rightButton();
+        }
+      }
 })
 
 span2.addEventListener('click', () => {
@@ -133,16 +141,33 @@ span3.addEventListener('click', () => {
 
 function spanActive() {
   switch (indexL) {
-    case 8:
+    case 0:
       spanClear();
       span1.classList.add('on');
       break;
-    case 5:
+      case 3:
+      spanClear();
+      span2.classList.add('on');
+    case 6:
       spanClear();
       span3.classList.add('on');
       break;
-    case 2:
-      spanClear();
-      span2.classList.add('on');
+  }
+}
+
+function positionSpan(n){
+  let inL = indexL;
+
+  if(n == 1){
+    if(inL == 0) return;
+    inL -=8;
+    inL *= -1;
+    if(inL <= 4){
+      flag =0;
+    }
+    if(inL > 4) {
+      flag =1; 
+    } 
+    return inL;
   }
 }
