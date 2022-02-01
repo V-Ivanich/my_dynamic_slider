@@ -220,15 +220,20 @@ function positionSpan(n) {
 
   if (n == 3) {
     if (x == 6) return;
-    if(x == 1){
-      x = 8; 
-    }
-    if(x == 0){
-      x = 7; 
-    }
-    if(x < 6){
+    if(x > 1){
       x -=2;
+    } 
+    else 
+    {
+      if(x == 1){
+        x = 8; 
+      }
+      if(x == 0){
+        x = 7; 
+      }
     }
+    
+   
   }
 
   if (x < 4){
