@@ -118,8 +118,11 @@ function spanClear() {
 
 //buttons spans
 span1.addEventListener('click', () => {
-  spanClear();
   let cikl = positionSpan(1);
+  if(cikl == undefined){
+    spanActive();
+    return;
+  }
   for (let i = 0; i < cikl; i++) {
     if (flag == 1) {
       leftButton();
@@ -132,8 +135,12 @@ span1.addEventListener('click', () => {
 })
 
 span2.addEventListener('click', () => {
-  spanClear();
+ 
   let cikl = positionSpan(2);
+  if(cikl == undefined){
+    spanActive();
+    return;
+  }
   for (let i = 0; i < cikl; i++) {
     if (flag == 1) {
       leftButton();
@@ -145,8 +152,12 @@ span2.addEventListener('click', () => {
 })
 
 span3.addEventListener('click', () => {
-  spanClear();
+ 
   let cikl = positionSpan(3);
+  if(cikl == undefined){
+    spanActive();
+    return;
+  }
   for (let i = 0; i < cikl; i++) {
     if (flag == 1) {
       leftButton();
