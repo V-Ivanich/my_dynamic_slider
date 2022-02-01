@@ -119,7 +119,7 @@ function spanClear() {
 //buttons spans
 span1.addEventListener('click', () => {
   spanClear();
-  let cikl = positionSpan(1)
+  let cikl = positionSpan(1);
   for (let i = 0; i < cikl; i++) {
     if (flag == 1) {
       leftButton();
@@ -133,7 +133,7 @@ span1.addEventListener('click', () => {
 
 span2.addEventListener('click', () => {
   spanClear();
-  let cikl = positionSpan(2)
+  let cikl = positionSpan(2);
   for (let i = 0; i < cikl; i++) {
     if (flag == 1) {
       leftButton();
@@ -146,7 +146,7 @@ span2.addEventListener('click', () => {
 
 span3.addEventListener('click', () => {
   spanClear();
-  let cikl = positionSpan(3)
+  let cikl = positionSpan(3);
   for (let i = 0; i < cikl; i++) {
     if (flag == 1) {
       leftButton();
@@ -222,13 +222,13 @@ function positionSpan(n) {
 
   if (x < 4){
     for(let i = x; i < 4; i++){
-      vCikle++;
+      vCikle ++;
     }
     flag = 0;
   }
   if (x > 4){
     for(let i = x; i > 4; i--){
-      vCikle++;
+      vCikle ++;
     }
     flag = 1;
   }
