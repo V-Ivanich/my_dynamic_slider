@@ -10,8 +10,7 @@ let pointY = [-105, 0, 105, 210, 315],//координаты вывода кар
   conteiner = document.querySelector('#slide'),
   slides = document.querySelectorAll('.slide-single'),
   firChild,
-  minus,
-  plus,
+  vCikle,
   slider = [];
 
 //скопировали в массив и удалили из html
@@ -171,92 +170,67 @@ function spanActive() {
     spanClear();
     span3.classList.add('on');
   }
-  // switch (indexL) {
-  //   case 0:
-  //     spanClear();
-  //     span1.classList.add('on');
-  //     break;
-  //   case 3:
-  //     spanClear();
-  //     span2.classList.add('on');
-  //   case 6:
-  //     spanClear();
-  //     span3.classList.add('on');
-  //     break;
-  // }
 }
 
 function positionSpan(n) {
-  let inL = indexL,
-    x;
-  x = inL;
-  plus = 0; minus = 0;
+  let x = indexL,
+  vCikle = 0;
 
   if (n == 1) {
-    if (inL == 0) return;
-    while (x != 0) {
-      x--;
-      minus++;
-    }
-    while (inL != 9) {
-      inL++;
-      plus++;
-    }
-    if (minus > plus) {
-      flag = 0;
-      return plus;
+    if (x == 0) return;
+    if(x < 4){
+      x +=4;
     }
     else {
-      flag = 1;
-      return minus;
+      if(x == 8){
+        x = 3;
+      }
+      if(x == 7){
+        x = 2;
+      }
+      if(x == 6){
+        x = 1;
+      }
+      if(x == 5){
+        x = 0;
+      }
     }
   }
 
   if (n == 2) {
-    if (inL == 3) return;
-    while (x > 3 && x < 9) {
-      x--;
-      minus++;
-    }
-    if (inL == 8) inL = -1;
-    if (inL == 7) inL = -2;
-    while (inL != 3) {
-      inL++;
-      plus++;
-    }
-    if (minus > plus) {
-      flag = 0;
-      return plus;
-    }
-    else {
-      flag = 1;
-      return minus;
-    }
+    if (x == 3) return;
+      if(x == 8){
+        x = 0;
+      }
+      else {
+        x ++;
+      }
   }
 
   if (n == 3) {
-    if (inL == 6) return;
-    if (x == 0) x = 9;
-    if (x == 1) x = 10;
-    if (x > 6) {
-      while (x != 6) {
-        x--;
-        minus++;
-      }
+    if (x == 6) return;
+    if(x == 1){
+      x = 8; 
     }
-    if (inL < 6) {
-      while (inL != 6) {
-        inL++;
-        plus++;
-      }
+    if(x == 0){
+      x = 7; 
     }
-    if (minus > plus) {
-      flag = 0;
-      return plus;
-    }
-    else {
-      flag = 1;
-      return minus;
+    if(x < 6){
+      x -=2;
     }
   }
+
+  if (x < 4){
+    for(let i = x; i < 4; i++){
+      vCikle++;
+    }
+    flag = 0;
+  }
+  if (x > 4){
+    for(let i = x; i > 4; i--){
+      vCikle++;
+    }
+    flag = 1;
+  }
+  return vCikle;
 }
