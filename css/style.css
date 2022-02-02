@@ -19,7 +19,7 @@ h1 {
     width: 90px;
     height: 90px;
     position: absolute;
-    transition: all ease 1s;
+    transition: all .5s ease-out;
     left: 0;
     top: 0;
 }
