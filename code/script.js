@@ -6,12 +6,13 @@ const btnLeft = document.querySelector('#lev'),
   span2 = document.querySelector('#sp2'),
   span3 = document.querySelector('#sp3');
 
-let pointY = [-105, 0, 105, 210, 315],//координаты вывода картинок
+let pointY = [-315, -210,-105, 0, 105, 210, 315, 420, 525],//координаты вывода картинок
   conteiner = document.querySelector('#slide'),
   slides = document.querySelectorAll('.slide-single'),
   firChild,
   vCikle,
-  slider = [];
+  kolImg = 3,//кол-во видимых элементов
+  slider = [];//массив с картинками
 
 //скопировали в массив и удалили из html
 for (let i = 0; i < slides.length; i++) {
@@ -19,19 +20,16 @@ for (let i = 0; i < slides.length; i++) {
   slides[i].remove();
 }
 
-let indexL = 0,//левая позиция скрытого элемента из массива картинок
-  indexR = 4,//правая позиция скрытого элемента
+let indexL = 6,//левая позиция скрытого элемента из массива картинок
+  indexR = 5,//правая позиция скрытого элемента
   flag = 0,//для прокрутки слайдера в определенную сторону
-  raschet,//вспомогательная
+  raschet = 0,//вспомогательная
   check,//еще один флаг
-  massivItems;//коллекция видимых картинок + 2 невидимых
+  massivItems;//коллекция видимых картинок + сколько то невидимых
 
-  function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-  }
 //фун-я создания и инициализации элемента
 //в зависимости от флага после или перед nodelist
-function bornItem(step, offset, check) {
+function bornItem(step, offset, check = 0) {
   let img = document.createElement('img');
 
   img.src = slider[step];
@@ -47,13 +45,14 @@ function bornItem(step, offset, check) {
 
 //начальная установка элементов
 //делается разово при запуске
-for (let i = 0; i != 5; i++) {
-  bornItem(i, i);
-  if (i == 4) {
-    break;
-  }
-}
 
+while(raschet < kolImg){
+  bornItem(slider.length - raschet -1, 2 - raschet, 1);
+  raschet++;
+}
+for (let i = 0; i < kolImg * 2; i++) {
+    bornItem(i, i + kolImg);
+  }
 //прокрутка слайдера в обе стороны
 // в зависимости от флага
 function effectSlide(flag) {
@@ -62,18 +61,16 @@ function effectSlide(flag) {
   if (flag == 0) {
     massivItems[0].remove();//1-й элемент удаляем
     for (let i = 1; i < massivItems.length; i++) {
-      sleep(1).then(() => { massivItems[i].style.left = pointY[i - 1] + 'px'; });
-      // massivItems[i].style.left = pointY[i - 1] + 'px';
+      massivItems[i].style.left = pointY[i - 1] + 'px';
     }
-    bornItem(indexR, 4);
+    bornItem(indexR, kolImg *3 -1);
   }
 
   if (flag == 1) {
     //последний элемент удаляем
-    massivItems[4].remove();
+    massivItems[kolImg * kolImg -1].remove();
     for (let k = massivItems.length - 1; k > 0; k--) {
-      sleep(1).then(() => { massivItems[k - 1].style.left = pointY[k] + 'px'; });
-      // massivItems[k - 1].style.left = pointY[k] + 'px';
+      massivItems[k - 1].style.left = pointY[k] + 'px';
     }
     bornItem(indexL, 0, 1);
   }
@@ -86,10 +83,11 @@ function leftButton() {
   if (indexL < 0) {
     indexL = 8;
   }
-  indexR = indexL + 4;
-  if (indexR > 8) {
-    raschet = indexR - 9;
-    indexR = raschet;
+  
+  if (indexL == 0) {
+    indexR = 8;
+  } else {
+    indexR = indexL - 1;
   }
   effectSlide(1);
   spanActive();
@@ -103,10 +101,11 @@ function rightButton() {
   if (indexR > 8) {
     indexR = 0;
   }
-  indexL = indexR - 4;
-  if (indexL < 0) {
-    raschet = 9 + indexL;
-    indexL = raschet;
+  
+  if (indexR == 8) {
+    indexL = 0;
+  } else {
+    indexL = indexR + 1;
   }
   effectSlide(0);
   spanActive();
@@ -191,8 +190,24 @@ function positionSpan(n) {
   let x = indexL,
   vCikle = 0;
 
-  if (n == 1) {
+  if (n == 1 ) {
     if (x == 0) return;
+    if(x > 1){
+      x -=2;
+    } 
+    else 
+    {
+      if(x == 1){
+        x = 8; 
+      }
+      if(x == 0){
+        x = 7; 
+      }
+    }
+  }
+
+  if (n == 2) {
+    if (x == 3) return;
     if(x < 5){
       x +=4;
     }
@@ -209,33 +224,17 @@ function positionSpan(n) {
       if(x == 5){
         x = 0;
       }
-    }
-  }
-
-  if (n == 2) {
-    if (x == 3) return;
-      if(x == 8){
-        x = 0;
-      }
-      else {
-        x ++;
-      }
+    }   
   }
 
   if (n == 3) {
     if (x == 6) return;
-    if(x > 1){
-      x -=2;
-    } 
-    else 
-    {
-      if(x == 1){
-        x = 8; 
-      }
-      if(x == 0){
-        x = 7; 
-      }
-    }   
+    if(x == 8){
+      x = 0;
+    }
+    else {
+      x ++;
+    }
   }
 
   if (x < 4){
