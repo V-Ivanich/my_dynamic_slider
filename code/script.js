@@ -26,6 +26,9 @@ let indexL = 0,//левая позиция скрытого элемента и�
   check,//еще один флаг
   massivItems;//коллекция видимых картинок + 2 невидимых
 
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 //фун-я создания и инициализации элемента
 //в зависимости от флага после или перед nodelist
 function bornItem(step, offset, check) {
@@ -59,17 +62,18 @@ function effectSlide(flag) {
   if (flag == 0) {
     massivItems[0].remove();//1-й элемент удаляем
     for (let i = 1; i < massivItems.length; i++) {
-      massivItems[i].style.left = pointY[i - 1] + 'px';
+      sleep(1).then(() => { massivItems[i].style.left = pointY[i - 1] + 'px'; });
+      // massivItems[i].style.left = pointY[i - 1] + 'px';
     }
     bornItem(indexR, 4);
-
   }
 
   if (flag == 1) {
     //последний элемент удаляем
     massivItems[4].remove();
     for (let k = massivItems.length - 1; k > 0; k--) {
-      massivItems[k - 1].style.left = pointY[k] + 'px';
+      sleep(1).then(() => { massivItems[k - 1].style.left = pointY[k] + 'px'; });
+      // massivItems[k - 1].style.left = pointY[k] + 'px';
     }
     bornItem(indexL, 0, 1);
   }
@@ -189,7 +193,7 @@ function positionSpan(n) {
 
   if (n == 1) {
     if (x == 0) return;
-    if(x < 4){
+    if(x < 5){
       x +=4;
     }
     else {
@@ -231,9 +235,7 @@ function positionSpan(n) {
       if(x == 0){
         x = 7; 
       }
-    }
-    
-   
+    }   
   }
 
   if (x < 4){

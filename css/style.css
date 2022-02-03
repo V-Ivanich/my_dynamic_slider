@@ -41,7 +41,7 @@ h1 {
   align-self: center;
 }
 .on {
-  transition: all ease 1s;
+  transition: all ease .5s;
   background-color: rgba(170, 100, 100, 0.726);
 }
 button {
