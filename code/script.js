@@ -6,7 +6,7 @@ const btnLeft = document.querySelector('#lev'),
   span2 = document.querySelector('#sp2'),
   span3 = document.querySelector('#sp3');
 
-let pointY = [-315, -210, -105, 0, 105, 210, 315, 420, 525],//координаты вывода картинок
+let pointY = [-525, -420, -315, -210, -105, 0, 105, 210, 315, 420, 525, 630, 735],//координаты вывода картинок
   conteiner = document.querySelector('#slide'),
   slides = document.querySelectorAll('.slide-single'),
   firChild,
@@ -20,16 +20,8 @@ for (let i = 0; i < slides.length; i++) {
   slides[i].remove();
 }
 
-function sleep(milliseconds) {
-  const date = Date.now();
-  let currentDate = null;
-  do {
-    currentDate = Date.now();
-  } while (currentDate - date < milliseconds);
-}
-
-let indexL = 6,//левая позиция скрытого элемента из массива картинок
-  indexR = 5,//правая позиция скрытого элемента
+let indexL = 4,//левая позиция скрытого элемента из массива картинок
+  indexR = 7,//правая позиция скрытого элемента
   flag = 0,//для прокрутки слайдера в определенную сторону
   raschet = 0,//вспомогательная
   check,//еще один флаг
@@ -53,12 +45,12 @@ function bornItem(step, offset, check = 0) {
 //начальная установка элементов
 //делается разово при запуске
 
-while (raschet < kolImg) {
-  bornItem(slider.length - raschet - 1, 2 - raschet, 1);
+while (raschet < 5) {
+  bornItem(slider.length - raschet - 1, 4 - raschet, 1);
   raschet++;
 }
-for (let i = 0; i < kolImg * 2; i++) {
-  bornItem(i, i + kolImg);
+for (let i = 0; i < 8; i++) {
+  bornItem(i, i + 5);
 }
 //прокрутка слайдера в обе стороны
 // в зависимости от флага
@@ -68,17 +60,15 @@ function effectSlide(flag) {
   if (flag == 0) {
     massivItems[0].remove();//1-й элемент удаляем
     for (let i = 1; i < massivItems.length; i++) {
-      sleep(10);
       massivItems[i].style.left = pointY[i - 1] + 'px';
     }
-    bornItem(indexR, kolImg * 3 - 1);
+    bornItem(indexR, 12);
   }
 
   if (flag == 1) {
     //последний элемент удаляем
-    massivItems[kolImg * kolImg - 1].remove();
+    massivItems[massivItems.length - 1].remove();
     for (let k = massivItems.length - 1; k > 0; k--) {
-      sleep(10);
       massivItems[k - 1].style.left = pointY[k] + 'px';
     }
     bornItem(indexL, 0, 1);
@@ -89,14 +79,22 @@ function effectSlide(flag) {
 //и расчет первой и последней позиции
 function leftButton() {
   indexL--;
-  if (indexL < 0) {
-    indexL = 8;
+  if (indexL < 6 & indexL >= 0) {
+    indexR = indexL + 3;
   }
-
-  if (indexL == 0) {
-    indexR = 8;
-  } else {
-    indexR = indexL - 1;
+  else {
+    switch (indexL) {
+      case 6:
+        indexR = 0;
+        break;
+      case 7:
+        indexR = 1;
+        break;
+      case -1:
+        indexL = 8;
+        indexR = 2;
+        break;
+    }
   }
   effectSlide(1);
   spanActive();
@@ -107,15 +105,24 @@ btnLeft.addEventListener('click', leftButton);
 //и расчет первой и последней позиции
 function rightButton() {
   indexR++;
-  if (indexR > 8) {
-    indexR = 0;
+  if (indexR > 2 & indexR < 9) {
+    indexL = indexR - 3;
+  }
+  else {
+    switch (indexR) {
+      case 9:
+        indexR = 0;
+        indexL = 6;
+        break;
+      case 1:
+        indexL = 7;
+        break;
+      case 2:
+        indexL = 8;
+        break;
+    }
   }
 
-  if (indexR == 8) {
-    indexL = 0;
-  } else {
-    indexL = indexR + 1;
-  }
   effectSlide(0);
   spanActive();
 }
@@ -181,15 +188,15 @@ span3.addEventListener('click', () => {
 })
 
 function spanActive() {
-  if (indexL == 6) {
+  if (indexL == 4) {
     spanClear();
     span1.classList.add('on');
   }
-  if (indexL == 0) {
+  if (indexL == 7) {
     spanClear();
     span2.classList.add('on');
   }
-  if (indexL == 3) {
+  if (indexL == 1) {
     spanClear();
     span3.classList.add('on');
   }
@@ -200,48 +207,47 @@ function positionSpan(n) {
     vCikle = 0;
 
   if (n == 1) {
-    if (x == 6) return;
-    if (x > 1) {
-      x -= 2;
-    }
-    else {
-      if (x == 1) {
-        x = 8;
-      }
-      if (x == 0) {
-        x = 7;
-      }
-    }
+    if (x == 4) return;
   }
 
   if (n == 2) {
-    if (x == 0) return;
-    if (x < 5) {
-      x += 4;
+    if (x == 7) return;
+
+    if (x > 2 & x < 9) {
+      x -= 3;
     }
     else {
-      if (x == 8) {
-        x = 3;
-      }
-      if (x == 7) {
-        x = 2;
-      }
-      if (x == 6) {
-        x = 1;
-      }
-      if (x == 5) {
-        x = 0;
+      switch (x) {
+        case 0:
+          x = 6;
+          break;
+        case 1:
+          x = 7;
+          break;
+        case 2:
+          x = 8;
+          break;
       }
     }
   }
 
   if (n == 3) {
-    if (x == 3) return;
-    if (x == 8) {
-      x = 0;
+    if (x == 1) return;
+    if (x < 6) {
+      x += 3;
     }
     else {
-      x++;
+      switch (x) {
+        case 6:
+          x = 0;
+          break;
+        case 7:
+          x = 1;
+          break;
+        case 8:
+          x = 2;
+          break;
+      }
     }
   }
 
