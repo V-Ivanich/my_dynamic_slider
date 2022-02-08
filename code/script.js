@@ -37,7 +37,7 @@ let position = [],//координаты вывода картинок
     position[temporary] = widthImage * k;
     temporary++;
   }
- 
+ console.log(position);
 
 //скопировали в массив картинки и удалили из html
 for (let i = 0; i < slides.length; i++) {
