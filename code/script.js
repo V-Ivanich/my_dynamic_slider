@@ -37,9 +37,9 @@ let position = [],//координаты вывода картинок
     position[temporary] = widthImage * k;
     temporary++;
   }
-  temporary = 0;
+ 
 
-//скопировали в массив и удалили из html
+//скопировали в массив картинки и удалили из html
 for (let i = 0; i < slides.length; i++) {
   sliderArray[i] = slides[i].src;
   slides[i].remove();
@@ -64,13 +64,13 @@ function bornItem(step, offset, miniFlag = 0) {
 
 //начальная установка элементов
 //делается разово при запуске
-
-while (temporary < 5) {
-  bornItem(sliderArray.length - temporary - 1, 4 - temporary, 1);
+temporary = 0;
+while (temporary < invisibleImg) {
+  bornItem(sliderArray.length - temporary - 1, invisibleImg - temporary - 1, 1);
   temporary++;
 }
-for (let i = 0; i < 8; i++) {
-  bornItem(i, i + 5);
+for (let i = 0; i < (invisibleImg + visibleImg); i++) {
+  bornItem(i, i + invisibleImg);
 }
 //прокрутка слайдера в обе стороны
 // в зависимости от флага
@@ -82,7 +82,7 @@ function effectSlide(flag) {
     for (let i = 1; i < massivItems.length; i++) {
       massivItems[i].style.left = position[i - 1] + 'px';
     }
-    bornItem(indexR, 12);
+    bornItem(indexR, massivItems.length - 1);
   }
 
   if (flag == 1) {
