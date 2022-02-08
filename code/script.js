@@ -1,4 +1,5 @@
 
+//получаем кнопки
 const btnLeft = document.querySelector('#lev'),
   btnRight = document.querySelector('#prav'),
   dots = document.querySelectorAll('.dot'),
@@ -6,48 +7,67 @@ const btnLeft = document.querySelector('#lev'),
   span2 = document.querySelector('#sp2'),
   span3 = document.querySelector('#sp3');
 
-let pointY = [-525, -420, -315, -210, -105, 0, 105, 210, 315, 420, 525, 630, 735],//координаты вывода картинок
-  conteiner = document.querySelector('#slide'),
-  slides = document.querySelectorAll('.slide-single'),
+let position = [],//координаты вывода картинок
+  conteinerImages = document.querySelector('#slide'),//контейнер для картинок
+  slides = document.querySelectorAll('.slide-single'),//коллекция картинок nodeList
   firChild,
-  vCikle,
-  kolImg = 3,//кол-во видимых элементов
-  slider = [];//массив с картинками
+  cycleDots,
+  widthImage = 90,//ширина картинки в 'px'
+  gap = 15,//расстояние между картинками в 'px'
+  visibleImg = 3,//кол-во видимых элементов
+  invisibleImg = 0,//невидимые кртинки , расчитывает js ;)
+  sliderArray = [];//массив с картинками
+
+  let indexL = 4,//левая позиция скрытого элемента из массива картинок
+  indexR = 7,//правая позиция скрытого элемента
+  flag = 0,//для прокрутки слайдера в определенную сторону
+  temporary = 0,//вспомогательная
+  miniFlag,//еще один флаг
+  massivItems;//коллекция видимых картинок + сколько то невидимых
+
+
+  //предварительные расчеты и заполнение массива позиций
+  invisibleImg = visibleImg * 2 - 1;
+  widthImage += gap;
+  for(let i = invisibleImg; i> 0; i--){
+    position[temporary] = -(widthImage * i);
+    temporary++;
+  }
+  for(let k = 0; k < invisibleImg + visibleImg; k++){
+    position[temporary] = widthImage * k;
+    temporary++;
+  }
+  temporary = 0;
 
 //скопировали в массив и удалили из html
 for (let i = 0; i < slides.length; i++) {
-  slider[i] = slides[i].src;
+  sliderArray[i] = slides[i].src;
   slides[i].remove();
 }
 
-let indexL = 4,//левая позиция скрытого элемента из массива картинок
-  indexR = 7,//правая позиция скрытого элемента
-  flag = 0,//для прокрутки слайдера в определенную сторону
-  raschet = 0,//вспомогательная
-  check,//еще один флаг
-  massivItems;//коллекция видимых картинок + сколько то невидимых
+
 
 //фун-я создания и инициализации элемента
 //в зависимости от флага после или перед nodelist
-function bornItem(step, offset, check = 0) {
+function bornItem(step, offset, miniFlag = 0) {
   let img = document.createElement('img');
 
-  img.src = slider[step];
+  img.src = sliderArray[step];
   img.classList.add('slide-single');
-  img.style.left = pointY[offset] + 'px';
+  img.style.left = position[offset] + 'px';
   document.querySelector('#slide').appendChild(img);
-  if (check == 1) {
-    firChild = conteiner.firstChild;
-    conteiner.insertBefore(img, firChild);
+  if (miniFlag == 1) {
+    firChild = conteinerImages.firstChild;
+    conteinerImages.insertBefore(img, firChild);
   }
 }
 
 //начальная установка элементов
 //делается разово при запуске
 
-while (raschet < 5) {
-  bornItem(slider.length - raschet - 1, 4 - raschet, 1);
-  raschet++;
+while (temporary < 5) {
+  bornItem(sliderArray.length - temporary - 1, 4 - temporary, 1);
+  temporary++;
 }
 for (let i = 0; i < 8; i++) {
   bornItem(i, i + 5);
@@ -60,7 +80,7 @@ function effectSlide(flag) {
   if (flag == 0) {
     massivItems[0].remove();//1-й элемент удаляем
     for (let i = 1; i < massivItems.length; i++) {
-      massivItems[i].style.left = pointY[i - 1] + 'px';
+      massivItems[i].style.left = position[i - 1] + 'px';
     }
     bornItem(indexR, 12);
   }
@@ -69,7 +89,7 @@ function effectSlide(flag) {
     //последний элемент удаляем
     massivItems[massivItems.length - 1].remove();
     for (let k = massivItems.length - 1; k > 0; k--) {
-      massivItems[k - 1].style.left = pointY[k] + 'px';
+      massivItems[k - 1].style.left = position[k] + 'px';
     }
     bornItem(indexL, 0, 1);
   }
@@ -204,7 +224,7 @@ function spanActive() {
 
 function positionSpan(n) {
   let x = indexL,
-    vCikle = 0;
+    cycleDots = 0;
 
   if (n == 1) {
     if (x == 4) return;
@@ -253,15 +273,15 @@ function positionSpan(n) {
 
   if (x < 4) {
     for (let i = x; i < 4; i++) {
-      vCikle++;
+      cycleDots++;
     }
     flag = 0;
   }
   if (x > 4) {
     for (let i = x; i > 4; i--) {
-      vCikle++;
+      cycleDots++;
     }
     flag = 1;
   }
-  return vCikle;
+  return cycleDots;
 }
