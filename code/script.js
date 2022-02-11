@@ -11,6 +11,7 @@ let position = [],//координаты вывода картинок
   conteinerImages = document.querySelector('#slide'),//контейнер для картинок
   slides = document.querySelectorAll('.slide-single'),//коллекция картинок nodeList
   firChild,
+  difference_L_R,//разница между крайними индексами в nodeList
   cycleDots,
   widthImage = 90,//ширина картинки в 'px'
   gap = 15,//расстояние между картинками в 'px'
@@ -18,8 +19,8 @@ let position = [],//координаты вывода картинок
   invisibleImg = 0,//невидимые кртинки , расчитывает js ;)
   sliderArray = [];//массив с картинками
 
-  let indexL = 4,//левая позиция скрытого элемента из массива картинок
-  indexR = 7,//правая позиция скрытого элемента
+  let indexL = 0,//левая позиция скрытого элемента из массива картинок
+  indexR = 0,//правая позиция скрытого элемента
   flag = 0,//для прокрутки слайдера в определенную сторону
   temporary = 0,//вспомогательная
   miniFlag,//еще один флаг
@@ -39,12 +40,12 @@ let position = [],//координаты вывода картинок
   }
  console.log(position);
 
+
 //скопировали в массив картинки и удалили из html
 for (let i = 0; i < slides.length; i++) {
   sliderArray[i] = slides[i].src;
   slides[i].remove();
 }
-
 
 
 //фун-я создания и инициализации элемента
@@ -71,7 +72,11 @@ while (temporary < invisibleImg) {
 }
 for (let i = 0; i < (invisibleImg + visibleImg); i++) {
   bornItem(i, i + invisibleImg);
+  indexR = i;
 }
+indexL = sliderArray.length - invisibleImg;
+difference_L_R = indexR - indexL;
+
 //прокрутка слайдера в обе стороны
 // в зависимости от флага
 function effectSlide(flag) {
@@ -99,8 +104,8 @@ function effectSlide(flag) {
 //и расчет первой и последней позиции
 function leftButton() {
   indexL--;
-  if (indexL < 6 & indexL >= 0) {
-    indexR = indexL + 3;
+  if (indexL < (sliderArray.length -1 - difference_L_R) & indexL >= 0) {
+    indexR = indexL + difference_L_R;
   }
   else {
     switch (indexL) {
@@ -125,8 +130,8 @@ btnLeft.addEventListener('click', leftButton);
 //и расчет первой и последней позиции
 function rightButton() {
   indexR++;
-  if (indexR > 2 & indexR < 9) {
-    indexL = indexR - 3;
+  if (indexR > (difference_L_R - 1) & indexR < sliderArray.length) {
+    indexL = indexR - difference_L_R;
   }
   else {
     switch (indexR) {
